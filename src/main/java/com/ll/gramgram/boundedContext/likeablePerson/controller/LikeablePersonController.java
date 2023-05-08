@@ -4,6 +4,7 @@ import com.ll.gramgram.base.rq.Rq;
 import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchCondition;
 import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -122,13 +123,15 @@ public class LikeablePersonController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/toList")
-    public String showToList(Model model) {
+    public String showToList(Model model, LikeableSearchCondition condition) {
         InstaMember instaMember = rq.getMember().getInstaMember();
 
         // 인스타인증을 했는지 체크
         if (instaMember != null) {
             // 해당 인스타회원이 좋아하는 사람들 목록
-            List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
+
+            List<LikeablePerson> likeablePeople =
+                    likeablePersonService.findByCondition(instaMember.getId(),condition);
             model.addAttribute("likeablePeople", likeablePeople);
         }
 
