@@ -31,18 +31,6 @@ public class LikeablePersonController {
         return "usr/likeablePerson/like";
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class LikeForm {
-        @NotBlank
-        @Size(min = 3, max = 30)
-        private final String username;
-        @NotNull
-        @Min(1)
-        @Max(3)
-        private final int attractiveTypeCode;
-    }
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/like")
     public String like(@Valid LikeForm likeForm) {
@@ -100,15 +88,6 @@ public class LikeablePersonController {
         return "usr/likeablePerson/modify";
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class ModifyForm {
-        @NotNull
-        @Min(1)
-        @Max(3)
-        private final int attractiveTypeCode;
-    }
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, @Valid ModifyForm modifyForm) {
@@ -131,10 +110,31 @@ public class LikeablePersonController {
             // 해당 인스타회원이 좋아하는 사람들 목록
 
             List<LikeablePerson> likeablePeople =
-                    likeablePersonService.findByCondition(instaMember.getId(),condition);
+                    likeablePersonService.findByCondition(instaMember.getId(), condition);
             model.addAttribute("likeablePeople", likeablePeople);
         }
 
         return "usr/likeablePerson/toList";
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class LikeForm {
+        @NotBlank
+        @Size(min = 3, max = 30)
+        private final String username;
+        @NotNull
+        @Min(1)
+        @Max(3)
+        private final int attractiveTypeCode;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ModifyForm {
+        @NotNull
+        @Min(1)
+        @Max(3)
+        private final int attractiveTypeCode;
     }
 }

@@ -30,17 +30,6 @@ public class InstaMemberController {
         return "usr/instaMember/connect";
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class ConnectForm {
-        @NotBlank
-        @Size(min = 3, max = 30)
-        private final String username;
-        @NotBlank
-        @Size(min = 1, max = 1)
-        private final String gender;
-    }
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/connect")
     public String connect(@Valid ConnectForm connectForm) {
@@ -59,19 +48,30 @@ public class InstaMemberController {
         return "usr/instaMember/connectByApi";
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class ConnectByApiForm {
-        @NotBlank
-        @Size(min = 1, max = 1)
-        private final String gender;
-    }
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/connectByApi")
     public String connectByApi(@Valid ConnectByApiForm connectForm) {
         rq.setSessionAttr("connectByApi__gender", connectForm.getGender());
 
         return "redirect:/oauth2/authorization/instagram";
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ConnectForm {
+        @NotBlank
+        @Size(min = 3, max = 30)
+        private final String username;
+        @NotBlank
+        @Size(min = 1, max = 1)
+        private final String gender;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ConnectByApiForm {
+        @NotBlank
+        @Size(min = 1, max = 1)
+        private final String gender;
     }
 }

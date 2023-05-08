@@ -28,11 +28,11 @@ public class Rq {
     private final NotificationService notificationService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
-    private Locale locale;
     private final HttpServletRequest req;
     private final HttpServletResponse resp;
     private final HttpSession session;
     private final User user;
+    private Locale locale;
     private Member member = null; // 레이지 로딩, 처음부터 넣지 않고, 요청이 들어올 때 넣는다.
 
     public Rq(MemberService memberService, NotificationService notificationService, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest req, HttpServletResponse resp, HttpSession session) {

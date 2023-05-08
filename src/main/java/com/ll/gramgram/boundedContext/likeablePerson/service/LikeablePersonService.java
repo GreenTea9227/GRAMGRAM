@@ -222,6 +222,6 @@ public class LikeablePersonService {
     }
 
     public List<LikeablePerson> findByCondition(Long instaId, LikeableSearchCondition condition) {
-        return likeablePersonRepository.findByCondition(instaId,condition);
+        return likeablePersonRepository.findByCondition(instaId, condition);
     }
 }

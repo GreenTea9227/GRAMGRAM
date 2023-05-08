@@ -10,22 +10,21 @@ import java.time.LocalDateTime;
 public class AppConfig {
     @Getter
     private static long likeablePersonFromMax;
+    @Getter
+    private static long likeablePersonModifyCoolTime;
+
+    public static LocalDateTime genLikeablePersonModifyUnlockDate() {
+        return LocalDateTime.now().plusSeconds(likeablePersonModifyCoolTime);
+    }
 
     @Value("${custom.likeablePerson.from.max}")
     public void setLikeablePersonFromMax(long likeablePersonFromMax) {
         AppConfig.likeablePersonFromMax = likeablePersonFromMax;
     }
 
-    @Getter
-    private static long likeablePersonModifyCoolTime;
-
     @Value("${custom.likeablePerson.modifyCoolTime}")
     public void setLikeablePersonModifyCoolTime(long likeablePersonModifyCoolTime) {
         AppConfig.likeablePersonModifyCoolTime = likeablePersonModifyCoolTime;
-    }
-
-    public static LocalDateTime genLikeablePersonModifyUnlockDate() {
-        return LocalDateTime.now().plusSeconds(likeablePersonModifyCoolTime);
     }
 }
 

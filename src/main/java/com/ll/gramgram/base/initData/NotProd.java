@@ -6,7 +6,6 @@ import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonServi
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
 import com.ll.gramgram.standard.util.Ut;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +60,7 @@ public class NotProd {
                 instaMemberService.connect(memberUser3, "insta_user3", "W");
                 instaMemberService.connect(memberUser4, "insta_user4", "M");
                 instaMemberService.connect(memberUser5, "insta_user5", "W");
-                instaMemberService.connect(memberUser7ByGoogle,"developegreentea","M");
+                instaMemberService.connect(memberUser7ByGoogle, "developegreentea", "M");
 
                 // 원활한 테스트와 개발을 위해서 자동으로 만들어지는 호감이 삭제, 수정이 가능하도록 쿨타임해제
                 LikeablePerson likeablePersonToInstaUser4 = likeablePersonService.like(memberUser3, "insta_user4", 1).getData();
@@ -71,7 +70,7 @@ public class NotProd {
                 LikeablePerson likeablePersonToInstaUserAbcd = likeablePersonService.like(memberUser3, "insta_user_abcd", 2).getData();
 
 
-                likeablePersonService.like(memberUser3,"developegreentea",1);
+                likeablePersonService.like(memberUser3, "developegreentea", 1);
                 LikeablePerson like2 = likeablePersonService.like(memberUser4, "developegreentea", 3).getData();
                 Ut.reflection.setFieldValue(like2, "modifyUnlockDate", LocalDateTime.now().minusSeconds(10));
                 LikeablePerson like3 = likeablePersonService.like(memberUser5, "developegreentea", 2).getData();

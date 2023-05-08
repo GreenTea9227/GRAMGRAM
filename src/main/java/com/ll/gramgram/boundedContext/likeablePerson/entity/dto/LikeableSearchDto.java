@@ -1,11 +1,8 @@
 package com.ll.gramgram.boundedContext.likeablePerson.entity.dto;
 
-import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.standard.util.Ut;
 import com.querydsl.core.annotations.QueryProjection;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 

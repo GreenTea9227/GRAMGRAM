@@ -3,7 +3,6 @@ package com.ll.gramgram.boundedContext.likeablePerson.repository;
 import com.ll.gramgram.boundedContext.instaMember.entity.QInstaMember;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchCondition;
-import com.querydsl.core.types.NullExpression;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -11,7 +10,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,15 +53,15 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
 
     }
 
-    private  BooleanExpression getId(Long id, QInstaMember toInstaMember) {
+    private BooleanExpression getId(Long id, QInstaMember toInstaMember) {
         return id != null ? toInstaMember.id.eq(id) : null;
     }
 
-    private  BooleanExpression getGender(String gender, QInstaMember toInstaMember) {
+    private BooleanExpression getGender(String gender, QInstaMember toInstaMember) {
         return StringUtils.hasText(gender) ? toInstaMember.gender.eq(gender) : null;
     }
 
-    private  BooleanExpression getAttractiveTypeCode(Integer code) {
+    private BooleanExpression getAttractiveTypeCode(Integer code) {
         return code != null ? likeablePerson.attractiveTypeCode.eq(code) : null;
     }
 
@@ -73,7 +71,7 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
 
         switch (code) {
             case 2 -> {
-                return new OrderSpecifier[]{likeablePerson.modifyDate.desc()};
+                return new OrderSpecifier[]{likeablePerson.modifyUnlockDate.asc()};
             }
             case 3 -> {
                 return new OrderSpecifier[]{likeablePerson.fromInstaMember.toLikeablePeople.size().desc()};
@@ -85,14 +83,14 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
                 return new OrderSpecifier[]{new CaseBuilder()
                         .when(likeablePerson.fromInstaMember.gender.eq("W")).then(1)
                         .otherwise(2)
-                        .asc(),likeablePerson.modifyDate.desc()};
+                        .asc(), likeablePerson.modifyUnlockDate.desc()};
             }
             case 6 -> {
                 return new OrderSpecifier[]{likeablePerson.attractiveTypeCode.asc(),
-                        likeablePerson.modifyDate.desc()};
+                        likeablePerson.modifyUnlockDate.desc()};
             }
             default -> {
-                return new OrderSpecifier[]{likeablePerson.modifyDate.asc()};
+                return new OrderSpecifier[]{likeablePerson.modifyUnlockDate.desc()};
             }
         }
     }
