@@ -1,0 +1,63 @@
+version: "3.7"
+
+services:
+  my-spring:
+    image: my-spring
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    # 위 설정으로 하면 동작 안함  -> 먼저 image를 만들어주고 하면 동작함
+
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+    depends_on:
+      - mariadb
+
+    healthcheck:
+      test: ["CMD","curl","my-spring:8080"]
+      interval: 10s
+      timeout: 20s
+      retries: 5
+      start_period: 50s
+    networks:
+      - net
+
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 1111
+      MYSQL_DATABASE: gram__test
+    ports:
+      - "3306:3306"
+    networks:
+      - net
+
+  grafana:
+    image: grafana/grafana
+    restart: on-failure
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - prometheus
+    networks:
+      - net
+  prometheus:
+    image: prom/prometheus
+    restart: on-failure
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+    depends_on:
+      - my-spring
+    networks:
+      - net
+
+networks:
+  net:
