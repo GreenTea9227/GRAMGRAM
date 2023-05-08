@@ -74,10 +74,10 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
                 return new OrderSpecifier[]{likeablePerson.modifyUnlockDate.asc()};
             }
             case 3 -> {
-                return new OrderSpecifier[]{likeablePerson.fromInstaMember.toLikeablePeople.size().desc()};
+                return new OrderSpecifier[]{likeablePerson.fromInstaMember.likes.desc()};
             }
             case 4 -> {
-                return new OrderSpecifier[]{likeablePerson.fromInstaMember.toLikeablePeople.size().asc()};
+                return new OrderSpecifier[]{likeablePerson.fromInstaMember.likes.asc()};
             }
             case 5 -> {
                 return new OrderSpecifier[]{new CaseBuilder()
