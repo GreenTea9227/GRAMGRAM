@@ -10,7 +10,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${testDbIp:172.17.0.1:3306}/gram__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useSSL=false&ssl-mode=DISABLED
     username: root
-    password: ${testPwd:}
+    password: ${testPwd:1111}
   security:
     oauth2:
       client:

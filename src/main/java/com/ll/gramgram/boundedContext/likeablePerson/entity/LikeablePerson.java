@@ -6,7 +6,9 @@ import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.standard.util.Ut;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -19,6 +21,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
+@Table(indexes = {
+        @Index(name = "fromToInsta", columnList = "from_insta_member_id, to_insta_member_id"),
+        @Index(name = "toInsta", columnList = "to_insta_member_id")})
 public class LikeablePerson extends BaseEntity {
     private LocalDateTime modifyUnlockDate;
 

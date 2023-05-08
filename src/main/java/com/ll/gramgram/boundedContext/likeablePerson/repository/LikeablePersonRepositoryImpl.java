@@ -42,8 +42,8 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
 
         return jpaQueryFactory
                 .selectFrom(likeablePerson)
-                .leftJoin(likeablePerson.toInstaMember, toInstaMember)
-                .leftJoin(likeablePerson.fromInstaMember, instaMember)
+                .join(likeablePerson.toInstaMember, toInstaMember)
+                .join(likeablePerson.fromInstaMember, instaMember)
                 .where(getId(id, toInstaMember),
                         getGender(condition.getGender(), instaMember),
                         getAttractiveTypeCode(condition.getAttractiveTypeCode()))
