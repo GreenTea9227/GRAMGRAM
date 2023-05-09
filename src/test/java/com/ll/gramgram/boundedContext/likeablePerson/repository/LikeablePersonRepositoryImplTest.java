@@ -157,8 +157,8 @@ class LikeablePersonRepositoryImplTest {
                         new LikeableSearchCondition(null, null, 2));
 
 
-        assertThat(list.get(list.size()-1).getFromInstaMemberUsername()).isEqualTo("insta_user15");
         assertThat(list.get(0).getFromInstaMemberUsername()).isEqualTo("insta_user12");
+        assertThat(list.get(list.size()-1).getFromInstaMemberUsername()).isEqualTo("insta_user15");
 
 
     }
@@ -188,20 +188,24 @@ class LikeablePersonRepositoryImplTest {
 
     }
     @Test
-    @DisplayName("toList 조건9: sort 최신순")
+    @DisplayName("toList 조건9: sort 성별순")
     void likeTest9() {
         InstaMember user11 = instaMemberService.findByUsername("insta_user11").orElseThrow();
 
         List<LikeablePerson> list =
                 likeablePersonService.findByCondition(user11.getId(),
                         new LikeableSearchCondition(null, null, 5));
+        for (LikeablePerson likeablePerson : list) {
+            System.out.println(likeablePerson.getFromInstaMemberUsername());
+            System.out.println(likeablePerson.getModifyUnlockDate());
+        }
         assertThat(list.get(0).getFromInstaMember().getGender()).isEqualTo("W");
         assertThat(list.get(1).getFromInstaMemberUsername()).isEqualTo("insta_user13");
         assertThat(list.get(list.size()-1).getFromInstaMember().getGender()).isEqualTo("M");
     }
 
     @Test
-    @DisplayName("toList 조건10: sort 최신순")
+    @DisplayName("toList 조건10: sort 호감사유순")
     void likeTest10() {
         InstaMember user11 = instaMemberService.findByUsername("insta_user11").orElseThrow();
 

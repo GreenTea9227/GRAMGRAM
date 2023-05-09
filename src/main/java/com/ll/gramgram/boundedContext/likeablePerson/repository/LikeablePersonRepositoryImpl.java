@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import static com.ll.gramgram.boundedContext.likeablePerson.entity.QLikeablePers
 
 @RequiredArgsConstructor
 public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCustom {
+    public static final long LIKE_LIMIT_COUNT = 10L;
+
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
@@ -36,19 +39,19 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
     }
 
     @Override
-    public List<LikeablePerson> findByCondition(Long id, LikeableSearchCondition condition) {
-        //toinsta가 == id
+    public List<LikeablePerson> findByCondition(Long instaId, LikeableSearchCondition condition) {
+        //toinsta가 == instaId
         QInstaMember toInstaMember = new QInstaMember("toInstaMember");
 
         return jpaQueryFactory
                 .selectFrom(likeablePerson)
                 .join(likeablePerson.toInstaMember, toInstaMember)
                 .join(likeablePerson.fromInstaMember, instaMember)
-                .where(getId(id, toInstaMember),
+                .where(getId(instaId, toInstaMember),
                         getGender(condition.getGender(), instaMember),
                         getAttractiveTypeCode(condition.getAttractiveTypeCode()))
                 .orderBy(sort(condition.getSortCode()))
-                .limit(10L)
+                .limit(LIKE_LIMIT_COUNT)
                 .fetch();
 
     }
@@ -65,33 +68,31 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
         return code != null ? likeablePerson.attractiveTypeCode.eq(code) : null;
     }
 
-    private OrderSpecifier[] sort(Integer code) {
+    //modifydate로 먼저 정렬하게 한다면?
+    private OrderSpecifier<?>[] sort(Integer code) {
         if (code == null)
             return new OrderSpecifier[]{};
 
+        List<OrderSpecifier<?>> list = new ArrayList<>();
         switch (code) {
-            case 2 -> {
-                return new OrderSpecifier[]{likeablePerson.modifyUnlockDate.asc()};
-            }
-            case 3 -> {
-                return new OrderSpecifier[]{likeablePerson.fromInstaMember.likes.desc()};
-            }
-            case 4 -> {
-                return new OrderSpecifier[]{likeablePerson.fromInstaMember.likes.asc()};
-            }
+            case 1 -> list.add(likeablePerson.modifyUnlockDate.desc());
+            case 2 -> list.add(likeablePerson.modifyUnlockDate.asc());
+            case 3 -> list.add(likeablePerson.fromInstaMember.likes.desc());
+            case 4 -> list.add(likeablePerson.fromInstaMember.likes.asc());
             case 5 -> {
-                return new OrderSpecifier[]{new CaseBuilder()
+                list.add(new CaseBuilder()
                         .when(likeablePerson.fromInstaMember.gender.eq("W")).then(1)
                         .otherwise(2)
-                        .asc(), likeablePerson.modifyUnlockDate.desc()};
+                        .asc());
+                list.add(likeablePerson.modifyUnlockDate.desc());
             }
             case 6 -> {
-                return new OrderSpecifier[]{likeablePerson.attractiveTypeCode.asc(),
-                        likeablePerson.modifyUnlockDate.desc()};
-            }
-            default -> {
-                return new OrderSpecifier[]{likeablePerson.modifyUnlockDate.desc()};
+                list.add(likeablePerson.attractiveTypeCode.asc());
+                list.add(likeablePerson.modifyUnlockDate.desc());
             }
         }
+
+        return list.toArray(new OrderSpecifier[0]);
+
     }
 }
