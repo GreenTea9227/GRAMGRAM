@@ -1,9 +1,10 @@
 package com.ll.gramgram.boundedContext.likeablePerson.repository;
 
-import com.ll.gramgram.boundedContext.instaMember.entity.QInstaMember;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchCondition;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchDto;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -39,43 +40,40 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
     }
 
     @Override
-    public List<LikeablePerson> findByCondition(Long instaId, LikeableSearchCondition condition) {
-        //toinsta가 == instaId
-        QInstaMember toInstaMember = new QInstaMember("toInstaMember");
+    public List<LikeableSearchDto> findByCondition(Long instaId, LikeableSearchCondition condition) {
 
         return jpaQueryFactory
-                .selectFrom(likeablePerson)
-                .join(likeablePerson.toInstaMember, toInstaMember)
+                .select(Projections.constructor(LikeableSearchDto.class,
+                        likeablePerson.createDate, likeablePerson.fromInstaMember.id, likeablePerson.toInstaMember.id,
+                        likeablePerson.fromInstaMember.gender, likeablePerson.attractiveTypeCode))
+                .from(likeablePerson)
                 .join(likeablePerson.fromInstaMember, instaMember)
-                .where(getId(instaId, toInstaMember),
-                        getGender(condition.getGender(), instaMember),
-                        getAttractiveTypeCode(condition.getAttractiveTypeCode()))
+                .where(equalId(instaId),
+                        equalGender(condition.getGender()),
+                        equalAttractiveTypeCode(condition.getAttractiveTypeCode()))
                 .orderBy(sort(condition.getSortCode()))
                 .limit(LIKE_LIMIT_COUNT)
                 .fetch();
-
     }
 
-    private BooleanExpression getId(Long id, QInstaMember toInstaMember) {
-        return id != null ? toInstaMember.id.eq(id) : null;
+    private BooleanExpression equalId(Long id) {
+        return id != null ? likeablePerson.toInstaMember.id.eq(id) : null;
     }
 
-    private BooleanExpression getGender(String gender, QInstaMember toInstaMember) {
-        return StringUtils.hasText(gender) ? toInstaMember.gender.eq(gender) : null;
+    private BooleanExpression equalGender(String gender) {
+        return StringUtils.hasText(gender) ? instaMember.gender.eq(gender) : null;
     }
 
-    private BooleanExpression getAttractiveTypeCode(Integer code) {
+    private BooleanExpression equalAttractiveTypeCode(Integer code) {
         return code != null ? likeablePerson.attractiveTypeCode.eq(code) : null;
     }
 
-    //modifydate로 먼저 정렬하게 한다면?
     private OrderSpecifier<?>[] sort(Integer code) {
         if (code == null)
             return new OrderSpecifier[]{};
 
         List<OrderSpecifier<?>> list = new ArrayList<>();
         switch (code) {
-            case 1 -> list.add(likeablePerson.modifyUnlockDate.desc());
             case 2 -> list.add(likeablePerson.modifyUnlockDate.asc());
             case 3 -> list.add(likeablePerson.fromInstaMember.likes.desc());
             case 4 -> list.add(likeablePerson.fromInstaMember.likes.asc());
@@ -89,7 +87,9 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
             case 6 -> {
                 list.add(likeablePerson.attractiveTypeCode.asc());
                 list.add(likeablePerson.modifyUnlockDate.desc());
+
             }
+            default -> list.add(likeablePerson.modifyUnlockDate.desc());
         }
 
         return list.toArray(new OrderSpecifier[0]);

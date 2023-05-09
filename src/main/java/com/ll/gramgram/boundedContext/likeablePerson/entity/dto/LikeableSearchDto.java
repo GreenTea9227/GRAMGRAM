@@ -1,7 +1,6 @@
 package com.ll.gramgram.boundedContext.likeablePerson.entity.dto;
 
 import com.ll.gramgram.standard.util.Ut;
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -12,20 +11,16 @@ public class LikeableSearchDto {
     private LocalDateTime createDate;
     private Long fromInstaMemberId; // 호감을 표시한 사람(인스타 멤버)
     private Long toInstaMemberId; // 호감을 표시한 사람(인스타 멤버)
-
-    private String genderDisplayName;
-    private String genderDisplayNameWithIcon;
-
+    private String gender;
     private int attractiveTypeCode;
 
-    @QueryProjection
-    public LikeableSearchDto(LocalDateTime createDate, Long fromInstaMemberId, Long toInstaMemberId,
-                             String genderDisplayName, String genderDisplayNameWithIcon, int attractiveTypeCode) {
+
+    public LikeableSearchDto(LocalDateTime createDate, Long fromInstaMemberId,
+                             Long toInstaMemberId, String gender, int attractiveTypeCode) {
         this.createDate = createDate;
         this.fromInstaMemberId = fromInstaMemberId;
         this.toInstaMemberId = toInstaMemberId;
-        this.genderDisplayName = genderDisplayName;
-        this.genderDisplayNameWithIcon = genderDisplayNameWithIcon;
+        this.gender = gender;
         this.attractiveTypeCode = attractiveTypeCode;
     }
 
@@ -47,5 +42,19 @@ public class LikeableSearchDto {
 
     public String getJdenticon() {
         return Ut.hash.sha256(fromInstaMemberId + "_likes_" + toInstaMemberId);
+    }
+
+    public String getGenderDisplayName() {
+        return switch (gender) {
+            case "W" -> "여성";
+            default -> "남성";
+        };
+    }
+
+    public String getGenderDisplayNameWithIcon() {
+        return switch (gender) {
+            case "W" -> "<i class=\"fa-solid fa-person-dress\"></i>";
+            default -> "<i class=\"fa-solid fa-person\"></i>";
+        } + "&nbsp;" + getGenderDisplayName();
     }
 }

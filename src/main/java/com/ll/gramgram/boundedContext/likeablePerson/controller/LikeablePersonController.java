@@ -5,6 +5,7 @@ import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchCondition;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchDto;
 import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -109,7 +110,7 @@ public class LikeablePersonController {
         if (instaMember != null) {
             // 해당 인스타회원이 좋아하는 사람들 목록
 
-            List<LikeablePerson> likeablePeople =
+            List<LikeableSearchDto> likeablePeople =
                     likeablePersonService.findByCondition(instaMember.getId(), condition);
             model.addAttribute("likeablePeople", likeablePeople);
         }

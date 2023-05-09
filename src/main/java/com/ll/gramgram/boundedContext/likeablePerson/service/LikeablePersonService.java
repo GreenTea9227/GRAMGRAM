@@ -9,6 +9,7 @@ import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchCondition;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchDto;
 import com.ll.gramgram.boundedContext.likeablePerson.repository.LikeablePersonRepository;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -221,7 +222,8 @@ public class LikeablePersonService {
         return RsData.of("S-1", "호감사유변경이 가능합니다.");
     }
 
-    public List<LikeablePerson> findByCondition(Long instaId, LikeableSearchCondition condition) {
+    @Transactional(readOnly = true)
+    public List<LikeableSearchDto> findByCondition(Long instaId, LikeableSearchCondition condition) {
         return likeablePersonRepository.findByCondition(instaId, condition);
     }
 }
