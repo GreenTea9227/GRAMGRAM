@@ -3,11 +3,6 @@ version: "3.7"
 services:
   my-spring:
     image: my-spring
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-    # 위 설정으로 하면 동작 안함  -> 먼저 image를 만들어주고 하면 동작함
-
     ports:
       - "8080:8080"
     restart: on-failure
@@ -28,7 +23,7 @@ services:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: 1111
-      MYSQL_DATABASE: gram__test
+      MYSQL_DATABASE: gram__prod
     ports:
       - "3306:3306"
     networks:

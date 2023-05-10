@@ -36,6 +36,7 @@ public class SecurityConfig {
                         logout -> logout
                                 .logoutUrl("/usr/member/logout")
                 );
+        http.authorizeHttpRequests().requestMatchers("/actuator/**").permitAll(); //실제로는 permitall 금지
 
         return http.build();
     }

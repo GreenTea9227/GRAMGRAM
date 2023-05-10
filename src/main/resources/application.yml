@@ -77,7 +77,7 @@ custom:
     from:
       max: 10
   site:
-    baseUrl: http://localhost
+    baseUrl: http://localhost:8080
 
 management:
   endpoints:

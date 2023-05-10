@@ -2,15 +2,15 @@
 
 <body>
 
-<header layout:fragment="header" class="sticky top-0 z-50">
+<header class="sticky top-0 z-50" layout:fragment="header">
     <div class="navbar max-w-2xl mx-auto bg-base-100">
         <div class="navbar-start">
             <div class="dropdown">
-                <label tabindex="0" class="btn btn-ghost btn-circle">
+                <label class="btn btn-ghost btn-circle" tabindex="0">
                     <i class="fa-solid fa-bars"></i>
                 </label>
-                <ul tabindex="0"
-                    class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-64">
+                <ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-64"
+                    tabindex="0">
                     <li th:if="${@rq.logout}">
                         <a href="/usr/member/login">
                             <th:block th:utext="#{c.iconStart}"></th:block>
@@ -42,7 +42,7 @@
                         </a>
                     </li>
 
-                    <div th:if="${@rq.login}" class="divider"></div>
+                    <div class="divider" th:if="${@rq.login}"></div>
 
                     <li th:if="${@rq.login}">
                         <a href="/usr/likeablePerson/like">
@@ -65,7 +65,7 @@
                         </a>
                     </li>
 
-                    <div th:if="${@rq.login}" class="divider"></div>
+                    <div class="divider" th:if="${@rq.login}"></div>
 
                     <li>
                         <a href="/usr/home/about">
@@ -78,29 +78,29 @@
                             <th:block th:utext="#{c.iconLogout}"></th:block>
                             <span th:text="#{c.pageNameLogout}"></span>
                         </a>
-                        <form class="!hidden" hidden th:action="|/usr/member/logout|" method="POST"></form>
+                        <form class="!hidden" hidden method="POST" th:action="|/usr/member/logout|"></form>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="navbar-center">
-            <a href="/" class="btn btn-ghost normal-case text-xl">
+            <a class="btn btn-ghost normal-case text-xl" href="/">
                 <span class="hidden min-[339px]:inline" th:utext="#{c.logoTextWithEmojiEn}"></span>
                 <span class="min-[339px]:hidden" th:utext="#{c.logoEmoji}"></span>
             </a>
         </div>
         <div class="navbar-end">
-            <a href="/usr/member/pop" class="btn btn-ghost gap-1" th:if="${@rq.login}">
+            <a class="btn btn-ghost gap-1" href="/usr/member/pop" th:if="${@rq.login}">
                 <i class="fa-solid fa-chart-line"></i>
             </a>
-            <a href="/usr/notification/list" class="btn btn-ghost btn-circle" th:if="${@rq.login}">
+            <a class="btn btn-ghost btn-circle" href="/usr/notification/list" th:if="${@rq.login}">
                 <div class="indicator">
                     <i class="fa-regular fa-bell"></i>
-                    <span data-test="hasUnreadNotifications" th:if="${@rq.hasUnreadNotifications}"
-                          class="badge badge-xs badge-primary indicator-item"></span>
+                    <span class="badge badge-xs badge-primary indicator-item" data-test="hasUnreadNotifications"
+                          th:if="${@rq.hasUnreadNotifications}"></span>
                 </div>
             </a>
-            <a href="/usr/home/about" class="btn btn-ghost btn-circle" th:if="${@rq.logout}">
+            <a class="btn btn-ghost btn-circle" href="/usr/home/about" th:if="${@rq.logout}">
                 <th:block th:utext="#{c.iconWhatIsThisService}"></th:block>
             </a>
         </div>

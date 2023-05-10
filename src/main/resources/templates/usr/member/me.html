@@ -6,10 +6,10 @@
 
 <body>
 
-<main layout:fragment="main" class="flex-grow flex items-center justify-center">
-    <div th:unless="${@rq.member.hasConnectedInstaMember}" th:include="usr/part/needToConnect::base"></div>
+<main class="flex-grow flex items-center justify-center" layout:fragment="main">
+    <div th:include="usr/part/needToConnect::base" th:unless="${@rq.member.hasConnectedInstaMember}"></div>
 
-    <div th:if="${@rq.member.hasConnectedInstaMember}" class="max-w-2xl w-full px-4">
+    <div class="max-w-2xl w-full px-4" th:if="${@rq.member.hasConnectedInstaMember}">
         <h1 class="mb-4">
             <i class="fa-solid fa-user"></i>
             내 정보
@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <a href="/usr/member/pop" class="mt-10 mb-4 block">
+        <a class="mt-10 mb-4 block" href="/usr/member/pop">
             <i class="fa-solid fa-chart-line"></i>
             내 인기
 
@@ -249,7 +249,7 @@
             </div>
         </div>
 
-        <a href="/usr/likeablePerson/toList" class="mt-10 mb-4 block">
+        <a class="mt-10 mb-4 block" href="/usr/likeablePerson/toList">
             <i class="fa-solid fa-fire"></i>
             최근에 받은 호감
 
@@ -267,7 +267,7 @@
             <div class="card bg-base-100 shadow-xl"
                  th:each="likeablePerson, i: ${@rq.member.instaMember.toLikeablePeople}">
                 <div class="card-body">
-                    <a href="#" class="card-title">
+                    <a class="card-title" href="#">
                         <span th:text="|No. ${i.index + 1} / ${i.size}|"></span>
                     </a>
 
@@ -276,7 +276,7 @@
                             <i class="fa-regular fa-face-laugh-beam"></i> 호감표시자
                         </div>
                         <div class="mt-2">
-                            <svg th:data-jdenticon-value="|${likeablePerson.jdenticon}|" width="120" height="120"></svg>
+                            <svg height="120" th:data-jdenticon-value="|${likeablePerson.jdenticon}|" width="120"></svg>
                         </div>
                     </div>
 
