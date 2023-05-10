@@ -74,7 +74,7 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
 
         List<OrderSpecifier<?>> list = new ArrayList<>();
         switch (code) {
-            case 2 -> list.add(likeablePerson.modifyUnlockDate.asc());
+            case 2 -> list.add(likeablePerson.createDate.asc());
             case 3 -> list.add(likeablePerson.fromInstaMember.likes.desc());
             case 4 -> list.add(likeablePerson.fromInstaMember.likes.asc());
             case 5 -> {
@@ -82,14 +82,13 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
                         .when(likeablePerson.fromInstaMember.gender.eq("W")).then(1)
                         .otherwise(2)
                         .asc());
-                list.add(likeablePerson.modifyUnlockDate.desc());
+                list.add(likeablePerson.createDate.desc());
             }
             case 6 -> {
                 list.add(likeablePerson.attractiveTypeCode.asc());
-                list.add(likeablePerson.modifyUnlockDate.desc());
-
+                list.add(likeablePerson.createDate.desc());
             }
-            default -> list.add(likeablePerson.modifyUnlockDate.desc());
+            default -> list.add(likeablePerson.createDate.desc());
         }
 
         return list.toArray(new OrderSpecifier[0]);
