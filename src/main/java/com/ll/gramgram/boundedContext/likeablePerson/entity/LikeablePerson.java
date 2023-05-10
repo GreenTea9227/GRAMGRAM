@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @Table(indexes = {
         @Index(name = "toFromInsta", columnList = "to_insta_member_id, from_insta_member_id"),
-@Index(name = "createDate",columnList = "creat_date")})
+@Index(name = "createDate",columnList = "createDate")})
 public class LikeablePerson extends BaseEntity {
     private LocalDateTime modifyUnlockDate;
 

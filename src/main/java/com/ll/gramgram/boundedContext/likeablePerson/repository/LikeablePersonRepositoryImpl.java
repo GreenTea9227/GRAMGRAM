@@ -75,8 +75,8 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
         List<OrderSpecifier<?>> list = new ArrayList<>();
         switch (code) {
             case 2 -> list.add(likeablePerson.createDate.asc());
-            case 3 -> list.add(likeablePerson.fromInstaMember.likes.desc());
-            case 4 -> list.add(likeablePerson.fromInstaMember.likes.asc());
+            case 3 -> list.add(likeablePerson.fromInstaMember.likeCount.desc());
+            case 4 -> list.add(likeablePerson.fromInstaMember.likeCount.asc());
             case 5 -> {
                 list.add(new CaseBuilder()
                         .when(likeablePerson.fromInstaMember.gender.eq("W")).then(1)
