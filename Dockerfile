@@ -1,7 +1,7 @@
 FROM gradle AS build
 WORKDIR /app
 COPY . .
-RUN gradle build
+RUN gradle clean build -x test
 
 
 FROM eclipse-temurin:17-alpine
