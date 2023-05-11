@@ -13,15 +13,17 @@ public class LikeableSearchDto {
     private Long toInstaMemberId; // 호감을 표시한 사람(인스타 멤버)
     private String gender;
     private int attractiveTypeCode;
+    private Long likes;
 
 
     public LikeableSearchDto(LocalDateTime createDate, Long fromInstaMemberId,
-                             Long toInstaMemberId, String gender, int attractiveTypeCode) {
+                             Long toInstaMemberId, String gender, int attractiveTypeCode,Long likes) {
         this.createDate = createDate;
         this.fromInstaMemberId = fromInstaMemberId;
         this.toInstaMemberId = toInstaMemberId;
         this.gender = gender;
         this.attractiveTypeCode = attractiveTypeCode;
+        this.likes =likes;
     }
 
     public String getAttractiveTypeDisplayName() {

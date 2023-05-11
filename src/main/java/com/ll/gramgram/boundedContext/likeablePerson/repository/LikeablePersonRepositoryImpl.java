@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.ll.gramgram.boundedContext.instaMember.entity.QInstaMember.instaMember;
 import static com.ll.gramgram.boundedContext.likeablePerson.entity.QLikeablePerson.likeablePerson;
 
 @RequiredArgsConstructor
@@ -44,10 +43,14 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
 
         return jpaQueryFactory
                 .select(Projections.constructor(LikeableSearchDto.class,
-                        likeablePerson.createDate, likeablePerson.fromInstaMember.id, likeablePerson.toInstaMember.id,
-                        likeablePerson.fromInstaMember.gender, likeablePerson.attractiveTypeCode))
+                        likeablePerson.createDate,
+                        likeablePerson.fromInstaMember.id,
+                        likeablePerson.toInstaMember.id,
+                        likeablePerson.fromInstaMember.gender,
+                        likeablePerson.attractiveTypeCode,
+                        likeablePerson.fromInstaMember.likeCount))
                 .from(likeablePerson)
-                .join(likeablePerson.fromInstaMember, instaMember)
+//                .join(likeablePerson.fromInstaMember, instaMember)
                 .where(equalId(instaId),
                         equalGender(condition.getGender()),
                         equalAttractiveTypeCode(condition.getAttractiveTypeCode()))
@@ -61,7 +64,7 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
     }
 
     private BooleanExpression equalGender(String gender) {
-        return StringUtils.hasText(gender) ? instaMember.gender.eq(gender) : null;
+        return StringUtils.hasText(gender) ? likeablePerson.fromInstaMember.gender.eq(gender) : null;
     }
 
     private BooleanExpression equalAttractiveTypeCode(Integer code) {
@@ -74,7 +77,7 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
 
         List<OrderSpecifier<?>> list = new ArrayList<>();
         switch (code) {
-            case 2 -> list.add(likeablePerson.createDate.asc());
+            case 2 -> list.add(likeablePerson.id.asc());
             case 3 -> list.add(likeablePerson.fromInstaMember.likeCount.desc());
             case 4 -> list.add(likeablePerson.fromInstaMember.likeCount.asc());
             case 5 -> {
@@ -82,16 +85,15 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
                         .when(likeablePerson.fromInstaMember.gender.eq("W")).then(1)
                         .otherwise(2)
                         .asc());
-                list.add(likeablePerson.createDate.desc());
+                list.add(likeablePerson.id.desc());
             }
             case 6 -> {
                 list.add(likeablePerson.attractiveTypeCode.asc());
-                list.add(likeablePerson.createDate.desc());
+                list.add(likeablePerson.id.desc());
             }
-            default -> list.add(likeablePerson.createDate.desc());
+            default -> list.add(likeablePerson.id.desc());
         }
 
         return list.toArray(new OrderSpecifier[0]);
-
     }
 }

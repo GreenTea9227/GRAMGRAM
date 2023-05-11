@@ -12,12 +12,7 @@ spring:
         show_sql: false
         format_sql: false
         use_sql_comments: false
-logging:
-  level:
-    root: INFO
-    com.ll.gramgram: INFO
-    org.hibernate.orm.jdbc.bind: INFO
-    org.hibernate.orm.jdbc.extract: INFO
+
 custom:
   site:
-    baseUrl: https://www.yyhh.site
+    baseUrl: https://yyhh.site

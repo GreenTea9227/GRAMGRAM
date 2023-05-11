@@ -102,6 +102,14 @@
                                 <svg height="120" th:data-jdenticon-value="|${likeablePerson.jdenticon}|"
                                      width="120"></svg>
                             </div>
+                            <div class="mt-4 mb-2 flex flex-col gap-2">
+                                <div>
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    인기
+                                </div>
+                                <span class="badge badge-primary"
+                                      th:text="|${#numbers.formatInteger(likeablePerson.likes, 0, 'COMMA')}|"></span>
+                            </div>
 
                             <div class="mt-4 mb-2 flex flex-col gap-2">
                                 <div>

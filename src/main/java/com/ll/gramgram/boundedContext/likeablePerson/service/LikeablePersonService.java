@@ -218,7 +218,6 @@ public class LikeablePersonService {
         if (!likeablePerson.isModifyUnlocked())
             return RsData.of("F-3", "아직 호감사유변경을 할 수 없습니다. %s에는 가능합니다.".formatted(likeablePerson.getModifyUnlockDateRemainStrHuman()));
 
-
         return RsData.of("S-1", "호감사유변경이 가능합니다.");
     }
 
