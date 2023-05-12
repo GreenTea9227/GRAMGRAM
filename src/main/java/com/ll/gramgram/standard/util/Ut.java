@@ -28,6 +28,7 @@ public class Ut {
             }
         }
     }
+
     public static class time {
         public static String diffFormat1Human(LocalDateTime time1, LocalDateTime time2) {
             String suffix = time1.isAfter(time2) ? "전" : "후";

@@ -37,7 +37,8 @@ public class InstaMember extends InstaMemberBase {
     @OrderBy("id desc") // 정렬
     @LazyCollection(LazyCollectionOption.EXTRA)
     @Builder.Default // @Builder 가 있으면 ` = new ArrayList<>();` 가 작동하지 않는다. 그래서 이걸 붙여야 한다.
-    private List<LikeablePerson> toLikeablePeople = new ArrayList<>();
+    private List<LikeablePerson> toLikeablePeople = new ArrayList<>(); //호감을 받는 사람
+
 
     public void addFromLikeablePerson(LikeablePerson likeablePerson) {
         fromLikeablePeople.add(0, likeablePerson);
@@ -76,6 +77,7 @@ public class InstaMember extends InstaMemberBase {
         if (gender.equals("M") && attractiveTypeCode == 1) likesCountByGenderManAndAttractiveTypeCode1++;
         if (gender.equals("M") && attractiveTypeCode == 2) likesCountByGenderManAndAttractiveTypeCode2++;
         if (gender.equals("M") && attractiveTypeCode == 3) likesCountByGenderManAndAttractiveTypeCode3++;
+        likeCount++;
     }
 
     public void decreaseLikesCount(String gender, int attractiveTypeCode) {
@@ -85,6 +87,7 @@ public class InstaMember extends InstaMemberBase {
         if (gender.equals("M") && attractiveTypeCode == 1) likesCountByGenderManAndAttractiveTypeCode1--;
         if (gender.equals("M") && attractiveTypeCode == 2) likesCountByGenderManAndAttractiveTypeCode2--;
         if (gender.equals("M") && attractiveTypeCode == 3) likesCountByGenderManAndAttractiveTypeCode3--;
+        likeCount--;
     }
 
     public void updateGender(String gender) {

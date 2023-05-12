@@ -4,6 +4,8 @@ import com.ll.gramgram.base.rq.Rq;
 import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchCondition;
+import com.ll.gramgram.boundedContext.likeablePerson.entity.dto.LikeableSearchDto;
 import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -28,18 +30,6 @@ public class LikeablePersonController {
     @GetMapping("/like")
     public String showLike() {
         return "usr/likeablePerson/like";
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class LikeForm {
-        @NotBlank
-        @Size(min = 3, max = 30)
-        private final String username;
-        @NotNull
-        @Min(1)
-        @Max(3)
-        private final int attractiveTypeCode;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -99,15 +89,6 @@ public class LikeablePersonController {
         return "usr/likeablePerson/modify";
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class ModifyForm {
-        @NotNull
-        @Min(1)
-        @Max(3)
-        private final int attractiveTypeCode;
-    }
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, @Valid ModifyForm modifyForm) {
@@ -122,16 +103,39 @@ public class LikeablePersonController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/toList")
-    public String showToList(Model model) {
+    public String showToList(Model model, LikeableSearchCondition condition) {
         InstaMember instaMember = rq.getMember().getInstaMember();
 
         // 인스타인증을 했는지 체크
         if (instaMember != null) {
             // 해당 인스타회원이 좋아하는 사람들 목록
-            List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
+
+            List<LikeableSearchDto> likeablePeople =
+                    likeablePersonService.findByCondition(instaMember.getId(), condition);
             model.addAttribute("likeablePeople", likeablePeople);
         }
 
         return "usr/likeablePerson/toList";
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class LikeForm {
+        @NotBlank
+        @Size(min = 3, max = 30)
+        private final String username;
+        @NotNull
+        @Min(1)
+        @Max(3)
+        private final int attractiveTypeCode;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ModifyForm {
+        @NotNull
+        @Min(1)
+        @Max(3)
+        private final int attractiveTypeCode;
     }
 }

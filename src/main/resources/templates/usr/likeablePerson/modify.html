@@ -6,7 +6,7 @@
 
 <body>
 
-<main layout:fragment="main" class="flex-grow flex items-center justify-center">
+<main class="flex-grow flex items-center justify-center" layout:fragment="main">
 
     <script th:inline="javascript">
         const inputValue__attractiveTypeCode = /*[[ ${likeablePerson.attractiveTypeCode} ]]*/ null;
@@ -27,8 +27,8 @@
             호감사유 변경
         </h1>
 
-        <form class="flex flex-col gap-6" method="POST" th:action
-              onsubmit="ModifyLikeForm__submit(this); return false;">
+        <form class="flex flex-col gap-6" method="POST" onsubmit="ModifyLikeForm__submit(this); return false;"
+              th:action>
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">
@@ -58,10 +58,10 @@
                     </span>
                 </label>
                 <div class="badge badge-primary" th:text="${likeablePerson.toInstaMember.username}"></div>
-                <a th:href="@{|https://instagram.com/${likeablePerson.toInstaMember.username}|}" target="_blank"
-                   class="block mt-3 text-sm break-all underline text-blue-400">
-                    <span>https://instagram.com/</span><span th:text="${likeablePerson.toInstaMember.username}"
-                                                             class="text-red-300"></span>
+                <a class="block mt-3 text-sm break-all underline text-blue-400" target="_blank"
+                   th:href="@{|https://instagram.com/${likeablePerson.toInstaMember.username}|}">
+                    <span>https://instagram.com/</span><span class="text-red-300"
+                                                             th:text="${likeablePerson.toInstaMember.username}"></span>
                 </a>
             </div>
 
@@ -86,7 +86,7 @@
                 <!-- 라벨을 클릭하면 라벨의 하위요소인 버튼(체크,라디오,일반 등)이 클릭되는 효과) -->
                 <div class="flex justify-center gap-4">
                     <label class="flex gap-2 items-center cursor-pointer">
-                        <input type="radio" name="attractiveTypeCode" value="1" class="radio peer">
+                        <input class="radio peer" name="attractiveTypeCode" type="radio" value="1">
                         <span class="text-gray-400 peer-checked:text-gray-900 peer-checked:font-bold peer-focus:text-gray-700">
                                 <i class="fa-solid fa-person-rays"></i>
                                 외모
@@ -94,7 +94,7 @@
                     </label>
 
                     <label class="flex gap-2 items-center cursor-pointer">
-                        <input type="radio" name="attractiveTypeCode" value="2" class="radio peer">
+                        <input class="radio peer" name="attractiveTypeCode" type="radio" value="2">
                         <span class="text-gray-400 peer-checked:text-gray-900 peer-checked:font-bold peer-focus:text-gray-700">
                                 <i class="fa-regular fa-face-smile"></i>
                                 성격
@@ -102,7 +102,7 @@
                     </label>
 
                     <label class="flex gap-2 items-center cursor-pointer">
-                        <input type="radio" name="attractiveTypeCode" value="3" class="radio peer">
+                        <input class="radio peer" name="attractiveTypeCode" type="radio" value="3">
                         <span class="text-gray-400 peer-checked:text-gray-900 peer-checked:font-bold peer-focus:text-gray-700">
                                 <i class="fa-solid fa-people-roof"></i>
                                 능력
@@ -119,28 +119,28 @@
 
             </div>
 
-            <button id="btn-modify-like-1" class="btn btn-block btn-primary gap-1">
+            <button class="btn btn-block btn-primary gap-1" id="btn-modify-like-1">
                 <i class="fa-solid fa-pen-to-square"></i>
                 <span>호감사유 변경</span>
             </button>
         </form>
 
         <div class="text-center mt-4">
-            <a th:if="${@rq.member.hasConnectedInstaMember}" href="/usr/likeablePerson/like"
-               class="btn btn-link">
+            <a class="btn btn-link" href="/usr/likeablePerson/like"
+               th:if="${@rq.member.hasConnectedInstaMember}">
                 <span>
                     <i class="fa-solid fa-heart-circle-plus mr-1"></i>
                     호감표시&nbsp;
                 </span>
             </a>
-            <a th:if="${@rq.member.hasConnectedInstaMember}" href="/usr/likeablePerson/list"
-               class="btn btn-link">
+            <a class="btn btn-link" href="/usr/likeablePerson/list"
+               th:if="${@rq.member.hasConnectedInstaMember}">
                 <span>
                     <i class="fa-solid fa-list-ol mr-1"></i>
                     호감목록
                 </span>
             </a>
-            <a th:if="${@rq.member.hasConnectedInstaMember}" href="/usr/member/me" class="btn btn-link">
+            <a class="btn btn-link" href="/usr/member/me" th:if="${@rq.member.hasConnectedInstaMember}">
                 <span>
                     <i class="fa-solid fa-user mr-1"></i>
                     내 정보

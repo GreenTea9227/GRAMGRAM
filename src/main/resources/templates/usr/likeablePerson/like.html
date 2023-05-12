@@ -6,8 +6,8 @@
 
 <body>
 
-<main layout:fragment="main" class="flex-grow flex items-center justify-center">
-    <div th:unless="${@rq.member.hasConnectedInstaMember}" th:include="usr/part/needToConnect::base"></div>
+<main class="flex-grow flex items-center justify-center" layout:fragment="main">
+    <div th:include="usr/part/needToConnect::base" th:unless="${@rq.member.hasConnectedInstaMember}"></div>
 
     <th:block th:if="${@rq.member.hasConnectedInstaMember}">
         <script th:inline="javascript">
@@ -54,7 +54,7 @@
                 호감표시
             </h1>
 
-            <form class="flex flex-col gap-6" method="POST" th:action onsubmit="LikeForm__submit(this); return false;">
+            <form class="flex flex-col gap-6" method="POST" onsubmit="LikeForm__submit(this); return false;" th:action>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">
@@ -72,14 +72,14 @@
                             상대방 인스타 아이디
                         </span>
                     </label>
-                    <a href="#" onclick="$(this).attr('href', $(this).text().replaceAll(' ', ''));" target="_blank"
-                       class="block mb-3 text-sm break-all underline text-blue-400">
+                    <a class="block mb-3 text-sm break-all underline text-blue-400" href="#" onclick="$(this).attr('href', $(this).text().replaceAll(' ', ''));"
+                       target="_blank">
                         <span>https://instagram.com/</span><span class="text-red-300"></span>
                     </a>
-                    <input type="text" name="username" placeholder="인스타 아이디" class="input input-bordered" autofocus
-                           onchange="$(this).keyup();"
-                           onkeyup="$(this).prev().children(':last-child').text(this.value.trim());"
-                           onpaste="setTimeoutZero(() => $(this).keyup());"/>
+                    <input autofocus class="input input-bordered" name="username" onchange="$(this).keyup();" onkeyup="$(this).prev().children(':last-child').text(this.value.trim());"
+                           onpaste="setTimeoutZero(() => $(this).keyup());"
+                           placeholder="인스타 아이디"
+                           type="text"/>
                     <script>
                         // input : 태그가 input 인 녀석 선택
                         // input[name="username"] 태그가 input 이고 name 속성의 값이 username 인 녀석을 선택
@@ -100,7 +100,7 @@
                     <!-- 라벨을 클릭하면 라벨의 하위요소인 버튼(체크,라디오,일반 등)이 클릭되는 효과) -->
                     <div class="flex justify-center gap-4">
                         <label class="flex gap-2 items-center cursor-pointer">
-                            <input type="radio" name="attractiveTypeCode" value="1" class="radio peer">
+                            <input class="radio peer" name="attractiveTypeCode" type="radio" value="1">
                             <span class="text-gray-400 peer-checked:text-gray-900 peer-checked:font-bold peer-focus:text-gray-700">
                                 <i class="fa-solid fa-person-rays"></i>
                                 외모
@@ -108,7 +108,7 @@
                         </label>
 
                         <label class="flex gap-2 items-center cursor-pointer">
-                            <input type="radio" name="attractiveTypeCode" value="2" class="radio peer">
+                            <input class="radio peer" name="attractiveTypeCode" type="radio" value="2">
                             <span class="text-gray-400 peer-checked:text-gray-900 peer-checked:font-bold peer-focus:text-gray-700">
                                 <i class="fa-regular fa-face-smile"></i>
                                 성격
@@ -116,7 +116,7 @@
                         </label>
 
                         <label class="flex gap-2 items-center cursor-pointer">
-                            <input type="radio" name="attractiveTypeCode" value="3" class="radio peer">
+                            <input class="radio peer" name="attractiveTypeCode" type="radio" value="3">
                             <span class="text-gray-400 peer-checked:text-gray-900 peer-checked:font-bold peer-focus:text-gray-700">
                                 <i class="fa-solid fa-people-roof"></i>
                                 능력
@@ -126,20 +126,20 @@
 
                 </div>
 
-                <button id="btn-like-1" class="btn btn-block btn-primary gap-1">
+                <button class="btn btn-block btn-primary gap-1" id="btn-like-1">
                     <i class="fa-solid fa-heart-circle-plus"></i>
                     <span>호감표시</span>
                 </button>
             </form>
 
             <div class="text-center mt-4">
-                <a th:if="${@rq.member.hasConnectedInstaMember}" href="list" class="btn btn-link">
+                <a class="btn btn-link" href="list" th:if="${@rq.member.hasConnectedInstaMember}">
                     <span>
                         <i class="fa-solid fa-list-ol mr-1"></i>
                         호감목록&nbsp;
                     </span>
                 </a>
-                <a th:if="${@rq.member.hasConnectedInstaMember}" href="/usr/member/me" class="btn btn-link">
+                <a class="btn btn-link" href="/usr/member/me" th:if="${@rq.member.hasConnectedInstaMember}">
                     <span>
                         <i class="fa-solid fa-user mr-1"></i>
                         내 정보&nbsp;
