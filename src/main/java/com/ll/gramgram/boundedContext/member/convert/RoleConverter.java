@@ -14,11 +14,11 @@ public class RoleConverter implements AttributeConverter<Set<Role>, String> {
     @Override
     public String convertToDatabaseColumn(Set<Role> attribute) {
 
-        return attribute.stream().map(i -> "ROLE_" + i.name()).collect(Collectors.joining(","));
+        return attribute.stream().map(Enum::name).collect(Collectors.joining(","));
     }
 
     @Override
     public Set<Role> convertToEntityAttribute(String dbData) {
-        return Arrays.stream(dbData.split(",")).map(r -> Role.valueOf(r.substring(5))).collect(Collectors.toSet());
+        return Arrays.stream(dbData.split(",")).map(Role::valueOf).collect(Collectors.toSet());
     }
 }

@@ -24,7 +24,7 @@ class RoleConverterTest {
     @Test
     void t2() {
         RoleConverter roleConverter = new RoleConverter();
-        String s = "ROLE_USER,ROLE_INSTAGRAM";
+        String s = "USER,INSTAGRAM";
         Set<Role> roles = roleConverter.convertToEntityAttribute(s);
         for (Role role : roles) {
             System.out.println("role = " + role);
