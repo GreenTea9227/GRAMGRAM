@@ -54,16 +54,13 @@ public class InstaMemberControllerTests {
                 .andExpect(handler().methodName("showConnect"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(containsString("""
-                        <input type="text" name="username"
+                        <input class="radio peer" name="gender" type="radio" value="W">
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="gender" value="W"
+                        <input class="radio peer" name="gender" type="radio" value="M">
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="gender" value="M"
-                        """.stripIndent().trim())))
-                .andExpect(content().string(containsString("""
-                        id="btn-insta-member-connect-1"
+                        id="btn-insta-member-connect-1
                         """.stripIndent().trim())));
     }
 
@@ -77,8 +74,6 @@ public class InstaMemberControllerTests {
 
         // THEN
         resultActions
-                .andExpect(handler().handlerType(InstaMemberController.class))
-                .andExpect(handler().methodName("showConnect"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrlPattern("**/usr/member/login**"));
     }

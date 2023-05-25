@@ -24,13 +24,11 @@ public class InstaMemberController {
     private final Rq rq;
     private final InstaMemberService instaMemberService;
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/connect")
     public String showConnect() {
         return "usr/instaMember/connect";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/connect")
     public String connect(@Valid ConnectForm connectForm) {
         RsData<InstaMember> rsData = instaMemberService.connect(rq.getMember(), connectForm.getUsername(), connectForm.getGender());
@@ -42,13 +40,11 @@ public class InstaMemberController {
         return rq.redirectWithMsg("/usr/likeablePerson/like", "인스타그램 계정이 연결되었습니다.");
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/connectByApi")
     public String showConnectByApi() {
         return "usr/instaMember/connectByApi";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/connectByApi")
     public String connectByApi(@Valid ConnectByApiForm connectForm) {
         rq.setSessionAttr("connectByApi__gender", connectForm.getGender());

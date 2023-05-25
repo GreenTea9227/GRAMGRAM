@@ -1,9 +1,9 @@
 package com.ll.gramgram.boundedContext.likeablePerson.service;
 
 import com.ll.gramgram.base.appConfig.AppConfig;
-import com.ll.gramgram.base.event.EventAfterLike;
-import com.ll.gramgram.base.event.EventAfterModifyAttractiveType;
-import com.ll.gramgram.base.event.EventBeforeCancelLike;
+import com.ll.gramgram.base.event.dto.like.EventAfterLike;
+import com.ll.gramgram.base.event.dto.like.EventAfterModifyAttractiveType;
+import com.ll.gramgram.base.event.dto.like.EventBeforeCancelLike;
 import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
@@ -38,7 +38,8 @@ public class LikeablePersonService {
         if (canLikeRsData.getResultCode().equals("S-2")) return modifyAttractive(actor, username, attractiveTypeCode);
 
         InstaMember fromInstaMember = actor.getInstaMember();
-        InstaMember toInstaMember = instaMemberService.findByUsernameOrCreate(username).getData();
+
+        InstaMember toInstaMember = instaMemberService.findByUsernameOrCreate( username).getData();
 
         LikeablePerson likeablePerson = LikeablePerson
                 .builder()

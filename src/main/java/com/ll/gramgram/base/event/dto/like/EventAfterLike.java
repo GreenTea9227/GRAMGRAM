@@ -1,4 +1,4 @@
-package com.ll.gramgram.base.event;
+package com.ll.gramgram.base.event.dto.like;
 
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import lombok.Getter;

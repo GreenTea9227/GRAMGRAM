@@ -1,4 +1,4 @@
-package com.ll.gramgram.base.event;
+package com.ll.gramgram.base.event.dto.like;
 
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import lombok.Getter;

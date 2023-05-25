@@ -26,13 +26,11 @@ public class LikeablePersonController {
     private final Rq rq;
     private final LikeablePersonService likeablePersonService;
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/like")
     public String showLike() {
         return "usr/likeablePerson/like";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/like")
     public String like(@Valid LikeForm likeForm) {
         RsData<LikeablePerson> rsData = likeablePersonService.like(rq.getMember(), likeForm.getUsername(), likeForm.getAttractiveTypeCode());
@@ -44,7 +42,6 @@ public class LikeablePersonController {
         return rq.redirectWithMsg("/usr/likeablePerson/list", rsData);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/list")
     public String showList(Model model) {
         InstaMember instaMember = rq.getMember().getInstaMember();
@@ -59,7 +56,6 @@ public class LikeablePersonController {
         return "usr/likeablePerson/list";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     public String cancel(@PathVariable Long id) {
         LikeablePerson likeablePerson = likeablePersonService.findById(id).orElse(null);
@@ -75,7 +71,6 @@ public class LikeablePersonController {
         return rq.redirectWithMsg("/usr/likeablePerson/list", deleteRsData);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String showModify(@PathVariable Long id, Model model) {
         LikeablePerson likeablePerson = likeablePersonService.findById(id).orElseThrow();
@@ -89,7 +84,6 @@ public class LikeablePersonController {
         return "usr/likeablePerson/modify";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, @Valid ModifyForm modifyForm) {
         RsData<LikeablePerson> rsData = likeablePersonService.modifyAttractive(rq.getMember(), id, modifyForm.getAttractiveTypeCode());
@@ -101,7 +95,6 @@ public class LikeablePersonController {
         return rq.redirectWithMsg("/usr/likeablePerson/list", rsData);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/toList")
     public String showToList(Model model, LikeableSearchCondition condition) {
         InstaMember instaMember = rq.getMember().getInstaMember();

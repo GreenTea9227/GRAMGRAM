@@ -2,6 +2,7 @@ package com.ll.gramgram.boundedContext.notification.entity;
 
 import com.ll.gramgram.base.baseEntity.BaseEntity;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
+import com.ll.gramgram.boundedContext.notification.NotificationStatus;
 import com.ll.gramgram.standard.util.Ut;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -31,6 +32,9 @@ public class Notification extends BaseEntity {
     private String newGender; // 해당사항 없으면 null
     private int newAttractiveTypeCode; // 해당사항 없으면 0
 
+    private String newTypeCode;
+    private NotificationStatus status;
+    private String message;
     public boolean isRead() {
         return readDate != null;
     }
@@ -69,5 +73,9 @@ public class Notification extends BaseEntity {
             case "W" -> "여성";
             default -> "남성";
         };
+    }
+
+    public void changeReadDate() {
+        this.readDate = LocalDateTime.now();
     }
 }
