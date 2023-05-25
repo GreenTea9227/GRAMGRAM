@@ -74,11 +74,8 @@ custom:
     from:
       max: 10
   site:
-<<<<<<< HEAD
-    baseUrl: https://localhost:8080
-=======
     baseUrl: https://localhost
->>>>>>> 77b10e23f782100cab815db0c9329cc4a6576ada
+
 
 management:
   endpoints:
