@@ -32,6 +32,7 @@ public class Rq {
     private final HttpServletResponse resp;
     private final HttpSession session;
     private final CustomOAuth2User user;
+
     private Locale locale;
     private Member member = null; // 레이지 로딩, 처음부터 넣지 않고, 요청이 들어올 때 넣는다.
 

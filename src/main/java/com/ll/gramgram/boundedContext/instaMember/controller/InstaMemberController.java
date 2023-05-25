@@ -29,6 +29,7 @@ public class InstaMemberController {
         return "usr/instaMember/connect";
     }
 
+
     @PostMapping("/connect")
     public String connect(@Valid ConnectForm connectForm) {
         RsData<InstaMember> rsData = instaMemberService.connect(rq.getMember(), connectForm.getUsername(), connectForm.getGender());
@@ -40,10 +41,12 @@ public class InstaMemberController {
         return rq.redirectWithMsg("/usr/likeablePerson/like", "인스타그램 계정이 연결되었습니다.");
     }
 
+
     @GetMapping("/connectByApi")
     public String showConnectByApi() {
         return "usr/instaMember/connectByApi";
     }
+
 
     @PostMapping("/connectByApi")
     public String connectByApi(@Valid ConnectByApiForm connectForm) {

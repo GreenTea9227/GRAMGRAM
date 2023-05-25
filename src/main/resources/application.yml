@@ -4,11 +4,11 @@ spring:
       filter:
         enabled: true
   profiles:
-    active: dev
+    active: prod
     include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${testDbIp:localhost:3306}/gram__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useSSL=false&ssl-mode=DISABLED
+    url: jdbc:mariadb://${testDbIp:172.17.0.1:3306}/gram__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useSSL=false&ssl-mode=DISABLED
     username: yohan
     password: ${testPwd:1111}
 
@@ -74,7 +74,11 @@ custom:
     from:
       max: 10
   site:
+<<<<<<< HEAD
     baseUrl: https://localhost:8080
+=======
+    baseUrl: https://localhost
+>>>>>>> 77b10e23f782100cab815db0c9329cc4a6576ada
 
 management:
   endpoints:

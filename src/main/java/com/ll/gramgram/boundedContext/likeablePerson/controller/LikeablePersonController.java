@@ -31,6 +31,7 @@ public class LikeablePersonController {
         return "usr/likeablePerson/like";
     }
 
+
     @PostMapping("/like")
     public String like(@Valid LikeForm likeForm) {
         RsData<LikeablePerson> rsData = likeablePersonService.like(rq.getMember(), likeForm.getUsername(), likeForm.getAttractiveTypeCode());
@@ -83,6 +84,7 @@ public class LikeablePersonController {
 
         return "usr/likeablePerson/modify";
     }
+
 
     @PostMapping("/modify/{id}")
     public String modify(@PathVariable Long id, @Valid ModifyForm modifyForm) {
