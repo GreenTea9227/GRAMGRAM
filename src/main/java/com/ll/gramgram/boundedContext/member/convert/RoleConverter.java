@@ -6,6 +6,7 @@ import jakarta.persistence.Converter;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,6 @@ public class RoleConverter implements AttributeConverter<Set<Role>, String> {
     public Set<Role> convertToEntityAttribute(String dbData) {
         if (StringUtils.hasText(dbData))
             return Arrays.stream(dbData.split(",")).map(Role::valueOf).collect(Collectors.toSet());
-        return null;
+        return new HashSet<>();
     }
 }

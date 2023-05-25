@@ -1,12 +1,14 @@
 package com.ll.gramgram.boundedContext.member.convert;
 
 import com.ll.gramgram.base.security.Role;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoleConverterTest {
@@ -29,6 +31,14 @@ class RoleConverterTest {
         for (Role role : roles) {
             System.out.println("role = " + role);
         }
+    }
+
+    @Test
+    void t3() {
+        RoleConverter roleConverter = new RoleConverter();
+        String s = null;
+        Set<Role> roles = roleConverter.convertToEntityAttribute(s);
+        assertThat(roles).isEmpty();
     }
 
 }
