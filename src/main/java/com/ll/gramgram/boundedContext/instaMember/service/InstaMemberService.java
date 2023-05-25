@@ -1,6 +1,7 @@
 package com.ll.gramgram.boundedContext.instaMember.service;
 
 import com.ll.gramgram.base.rsData.RsData;
+import com.ll.gramgram.base.security.Role;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMemberSnapshot;
 import com.ll.gramgram.boundedContext.instaMember.repository.InstaMemberRepository;
@@ -31,6 +32,9 @@ public class InstaMemberService {
     // username : 입력한 본인 인스타 username
     // gender : 입력한 본인의 성별
     public RsData<InstaMember> connect(Member member, String username, String gender) {
+
+        member.addRole(Role.INSTAGRAM);
+
         Optional<InstaMember> opInstaMember = findByUsername(username); // 혹시 다른 회원이 이미 입력하신 인스타 ID와 연결되었는지
 
         // 등록이 되어있고, 성별이 U가 아니라
@@ -40,7 +44,7 @@ public class InstaMemberService {
         }
 
         //
-        RsData<InstaMember> instaMemberRsData = findByUsernameOrCreate(username, gender);
+        RsData<InstaMember> instaMemberRsData = findByUsernameOrCreate(username,gender);
 
         memberService.updateInstaMember(member, instaMemberRsData.getData());
 
@@ -84,6 +88,7 @@ public class InstaMemberService {
         }
 
         // 생성
+
         return create(username, gender);
     }
 
@@ -141,7 +146,11 @@ public class InstaMemberService {
                 });
     }
 
+    @Transactional
     public RsData<InstaMember> connect(Member actor, String gender, String oauthId, String username, String accessToken) {
+
+        actor.addRole(Role.INSTAGRAM);
+
         Optional<InstaMember> opInstaMember = instaMemberRepository.findByOauthId(oauthId);
 
         if (opInstaMember.isPresent()) {

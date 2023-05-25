@@ -1,9 +1,9 @@
-package com.ll.gramgram.boundedContext.instaMember.eventListener;
+package com.ll.gramgram.base.event.eventListener;
 
-import com.ll.gramgram.base.event.EventAfterFromInstaMemberChangeGender;
-import com.ll.gramgram.base.event.EventAfterLike;
-import com.ll.gramgram.base.event.EventAfterModifyAttractiveType;
-import com.ll.gramgram.base.event.EventBeforeCancelLike;
+import com.ll.gramgram.base.event.dto.like.EventAfterFromInstaMemberChangeGender;
+import com.ll.gramgram.base.event.dto.like.EventAfterLike;
+import com.ll.gramgram.base.event.dto.like.EventAfterModifyAttractiveType;
+import com.ll.gramgram.base.event.dto.like.EventBeforeCancelLike;
 import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -12,11 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-@Transactional
 public class InstaMemberEventListener {
+
     private final InstaMemberService instaMemberService;
 
     @EventListener
+    @Transactional
     public void listen(EventAfterModifyAttractiveType event) {
         instaMemberService.whenAfterModifyAttractiveType(event.getLikeablePerson(), event.getOldAttractiveTypeCode());
     }
@@ -35,4 +36,5 @@ public class InstaMemberEventListener {
     public void listen(EventAfterFromInstaMemberChangeGender event) {
         instaMemberService.whenAfterFromInstaMemberChangeGender(event.getInstaMember(), event.getOldGender());
     }
+
 }

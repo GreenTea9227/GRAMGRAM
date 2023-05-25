@@ -1,10 +1,17 @@
 package com.ll.gramgram.boundedContext.member.service;
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import com.ll.gramgram.base.exceptionHandler.DataNotFoundException;
 import com.ll.gramgram.base.rsData.RsData;
+import com.ll.gramgram.base.security.Role;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
+import com.ll.gramgram.boundedContext.member.dto.ChangePasswordDto;
+import com.ll.gramgram.boundedContext.member.dto.FindPasswordForm;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +19,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true) // 아래 메서드들이 전부 readonly 라는 것을 명시, 나중을 위해
@@ -19,6 +27,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     private final MemberRepository memberRepository;
+    private final ApplicationEventPublisher publisher;
 
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
@@ -46,7 +55,7 @@ public class MemberService {
                 .username(username)
                 .password(password)
                 .build();
-
+        member.addRole(Role.USER);
         memberRepository.save(member);
 
         return RsData.of("S-1", "회원가입이 완료되었습니다.", member);
@@ -70,4 +79,29 @@ public class MemberService {
         // 소셜 로그인를 통한 가입시 비번은 없다.
         return join(providerTypeCode, username, ""); // 최초 로그인 시 딱 한번 실행
     }
+
+    @Transactional
+    public RsData<String> checkAndChangePassword(FindPasswordForm findPasswordForm) {
+
+        Member member = memberRepository.findByEmail(findPasswordForm.getEmail())
+                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 이메일입니다."));
+
+        String newPassword = changePassword(member);
+
+        log.info("이메일 전송 시도");
+        publisher.publishEvent(new ChangePasswordDto(member.getEmail(), newPassword));
+
+        return RsData.of("S-1", "이메일을 확인하세요");
+    }
+
+    private String changePassword(Member member) {
+
+        String newPassword = NanoIdUtils.randomNanoId();
+        String encode = passwordEncoder.encode(newPassword);
+
+        member.changePassword(encode);
+
+        return newPassword;
+    }
 }
+

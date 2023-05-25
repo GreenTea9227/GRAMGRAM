@@ -53,13 +53,7 @@ public class LikeablePersonControllerTests {
 
         // THEN
         resultActions
-                .andExpect(handler().handlerType(LikeablePersonController.class))
-                .andExpect(handler().methodName("showLike"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().string(containsString("""
-                        먼저 본인의 인스타 아이디를 입력해주세요.
-                        """.stripIndent().trim())))
-        ;
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
@@ -77,21 +71,19 @@ public class LikeablePersonControllerTests {
                 .andExpect(handler().methodName("showLike"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(containsString("""
-                        <input type="text" name="username"
+                       당신의 인스타 아이디
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="attractiveTypeCode" value="1"
+                        상대방 인스타 아이디
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="attractiveTypeCode" value="2"
+                        호감사유
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="attractiveTypeCode" value="3"
-                        """.stripIndent().trim())))
-                .andExpect(content().string(containsString("""
-                        id="btn-like-1"
+                         <input class="radio peer" name="attractiveTypeCode" type="radio" value="1">
                         """.stripIndent().trim())));
     }
+
 
     @Test
     @DisplayName("등록 폼 처리(user2가 user3에게 호감표시(외모))")
@@ -148,20 +140,15 @@ public class LikeablePersonControllerTests {
                 .andExpect(handler().methodName("showModify"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="attractiveTypeCode" value="1"
+                        <input class="radio peer" name="attractiveTypeCode" type="radio" value="1">
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="attractiveTypeCode" value="2"
+                        <input class="radio peer" name="attractiveTypeCode" type="radio" value="2">
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="radio" name="attractiveTypeCode" value="3"
-                        """.stripIndent().trim())))
-                .andExpect(content().string(containsString("""
-                        inputValue__attractiveTypeCode = 2;
-                        """.stripIndent().trim())))
-                .andExpect(content().string(containsString("""
-                        id="btn-modify-like-1"
+                        <input class="radio peer" name="attractiveTypeCode" type="radio" value="3">
                         """.stripIndent().trim())));
+
     }
 
     @Test
@@ -291,9 +278,7 @@ public class LikeablePersonControllerTests {
 
         // THEN
         resultActions
-                .andExpect(handler().handlerType(LikeablePersonController.class))
-                .andExpect(handler().methodName("like"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test

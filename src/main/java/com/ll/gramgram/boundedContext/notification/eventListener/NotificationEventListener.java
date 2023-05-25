@@ -1,7 +1,7 @@
 package com.ll.gramgram.boundedContext.notification.eventListener;
 
-import com.ll.gramgram.base.event.EventAfterLike;
-import com.ll.gramgram.base.event.EventAfterModifyAttractiveType;
+import com.ll.gramgram.base.event.dto.like.EventAfterLike;
+import com.ll.gramgram.base.event.dto.like.EventAfterModifyAttractiveType;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;

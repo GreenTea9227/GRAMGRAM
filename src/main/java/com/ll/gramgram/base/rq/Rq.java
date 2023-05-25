@@ -1,6 +1,7 @@
 package com.ll.gramgram.base.rq;
 
 import com.ll.gramgram.base.rsData.RsData;
+import com.ll.gramgram.base.security.CustomOAuth2User;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
 import com.ll.gramgram.boundedContext.notification.service.NotificationService;
@@ -11,7 +12,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
@@ -28,11 +28,12 @@ public class Rq {
     private final NotificationService notificationService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
-    private Locale locale;
     private final HttpServletRequest req;
     private final HttpServletResponse resp;
     private final HttpSession session;
-    private final User user;
+    private final CustomOAuth2User user;
+
+    private Locale locale;
     private Member member = null; // 레이지 로딩, 처음부터 넣지 않고, 요청이 들어올 때 넣는다.
 
     public Rq(MemberService memberService, NotificationService notificationService, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
@@ -47,8 +48,8 @@ public class Rq {
         // 현재 로그인한 회원의 인증정보를 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication.getPrincipal() instanceof User) {
-            this.user = (User) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+            this.user = (CustomOAuth2User) authentication.getPrincipal();
         } else {
             this.user = null;
         }

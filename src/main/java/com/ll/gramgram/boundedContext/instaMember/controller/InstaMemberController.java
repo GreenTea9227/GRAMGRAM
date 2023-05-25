@@ -24,10 +24,35 @@ public class InstaMemberController {
     private final Rq rq;
     private final InstaMemberService instaMemberService;
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/connect")
     public String showConnect() {
         return "usr/instaMember/connect";
+    }
+
+
+    @PostMapping("/connect")
+    public String connect(@Valid ConnectForm connectForm) {
+        RsData<InstaMember> rsData = instaMemberService.connect(rq.getMember(), connectForm.getUsername(), connectForm.getGender());
+
+        if (rsData.isFail()) {
+            return rq.historyBack(rsData);
+        }
+
+        return rq.redirectWithMsg("/usr/likeablePerson/like", "인스타그램 계정이 연결되었습니다.");
+    }
+
+
+    @GetMapping("/connectByApi")
+    public String showConnectByApi() {
+        return "usr/instaMember/connectByApi";
+    }
+
+
+    @PostMapping("/connectByApi")
+    public String connectByApi(@Valid ConnectByApiForm connectForm) {
+        rq.setSessionAttr("connectByApi__gender", connectForm.getGender());
+
+        return "redirect:/oauth2/authorization/instagram";
     }
 
     @AllArgsConstructor
@@ -41,37 +66,11 @@ public class InstaMemberController {
         private final String gender;
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/connect")
-    public String connect(@Valid ConnectForm connectForm) {
-        RsData<InstaMember> rsData = instaMemberService.connect(rq.getMember(), connectForm.getUsername(), connectForm.getGender());
-
-        if (rsData.isFail()) {
-            return rq.historyBack(rsData);
-        }
-
-        return rq.redirectWithMsg("/usr/likeablePerson/like", "인스타그램 계정이 연결되었습니다.");
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/connectByApi")
-    public String showConnectByApi() {
-        return "usr/instaMember/connectByApi";
-    }
-
     @AllArgsConstructor
     @Getter
     public static class ConnectByApiForm {
         @NotBlank
         @Size(min = 1, max = 1)
         private final String gender;
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/connectByApi")
-    public String connectByApi(@Valid ConnectByApiForm connectForm) {
-        rq.setSessionAttr("connectByApi__gender", connectForm.getGender());
-
-        return "redirect:/oauth2/authorization/instagram";
     }
 }

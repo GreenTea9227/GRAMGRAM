@@ -51,13 +51,13 @@ public class MemberControllerTests {
                 .andExpect(handler().methodName("showLogin"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(containsString("""
-                        <input type="text" name="username"
+                        class="input input-bordered" name="username"
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        <input type="password" name="password"
+                        <input class="input input-bordered" name="password"
                         """.stripIndent().trim())))
                 .andExpect(content().string(containsString("""
-                        id="btn-login-1"
+                        id="btn-login-1">
                         """.stripIndent().trim())));
     }
 
