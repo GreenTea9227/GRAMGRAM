@@ -3,6 +3,7 @@ package com.ll.gramgram.boundedContext.member.convert;
 import com.ll.gramgram.base.security.Role;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -19,6 +20,8 @@ public class RoleConverter implements AttributeConverter<Set<Role>, String> {
 
     @Override
     public Set<Role> convertToEntityAttribute(String dbData) {
-        return Arrays.stream(dbData.split(",")).map(Role::valueOf).collect(Collectors.toSet());
+        if (StringUtils.hasText(dbData))
+            return Arrays.stream(dbData.split(",")).map(Role::valueOf).collect(Collectors.toSet());
+        return null;
     }
 }
