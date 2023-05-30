@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Configuration
-@Profile({"dev", "test"})
+@Profile({"hello"})
+//@Profile({"dev", "test"})
 public class NotProd {
 
     @Bean

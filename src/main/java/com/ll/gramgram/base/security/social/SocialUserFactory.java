@@ -3,6 +3,7 @@ package com.ll.gramgram.base.security.social;
 
 import com.ll.gramgram.base.exceptionHandler.NotSupportUserLoginException;
 import com.ll.gramgram.base.security.social.inter.DivideOAuth2User;
+import com.ll.gramgram.base.security.social.user.FacebookUser;
 import com.ll.gramgram.base.security.social.user.GoogleUser;
 import com.ll.gramgram.base.security.social.user.KakaoUser;
 import com.ll.gramgram.base.security.social.user.NaverUser;
@@ -24,6 +25,10 @@ public class SocialUserFactory {
 
         if (isMatchWithProvider(providerTypeCode, NAVER)) {
             return new NaverUser(oAuth2User);
+        }
+
+        if (isMatchWithProvider(providerTypeCode, FACEBOOK)) {
+            return new FacebookUser(oAuth2User);
         }
 
         throw new NotSupportUserLoginException("지원하지 않는 로그인 방식입니다.");
