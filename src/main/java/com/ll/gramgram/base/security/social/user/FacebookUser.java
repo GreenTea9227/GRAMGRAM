@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 public class FacebookUser extends DivideOAuth2User {
 
     public FacebookUser(OAuth2User oAuth2User) {
-        super(oAuth2User, oAuth2User.getAttribute("response"));
+        super(oAuth2User, oAuth2User.getAttributes());
 
     }
 
@@ -23,12 +23,12 @@ public class FacebookUser extends DivideOAuth2User {
 
     @Override
     public String getEmail() {
-        return null;
+        return (String) getAttributes().get("email");
     }
 
     @Override
     public String getProviderCode() {
-        return OAuth2Provider.NAVER.name();
+        return OAuth2Provider.FACEBOOK.name();
     }
 
 }

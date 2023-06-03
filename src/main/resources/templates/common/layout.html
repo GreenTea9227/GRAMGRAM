@@ -37,7 +37,8 @@
 <!-- 테일윈드 불러오기 -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<div class="min-h-screen flex flex-col pb-10">
+<div class="min-h-screen flex flex-col pb-10 bg-cover"
+     style="background-image: url('/resource/image/romantic.jpg')">
     <header layout:fragment="header"></header>
 
     <main layout:fragment="main"></main>
@@ -70,7 +71,12 @@
         }
     });
 </script>
-
+<footer layout:fragment="footer" class="p-4 bg-gray-800 text-white">
+    <div class="container mx-auto text-center">
+        <a href="https://kr.freepik.com/free-photo/romantic-composition-made-with-red-hearts-on-white-background-with-copyspace-for-text_8868725.htm#page=2&query=heart&position=38&from_view=search&track=robertav1_2_sidr" class="text-white hover:text-blue-400">작가 denamorado</a>
+        <p>출처 <a href="https://www.freepik.com" class="text-white hover:text-blue-400">Freepik</a></p>
+    </div>
+</footer>
 <script async crossorigin="anonymous"
         integrity="sha384-yBhgDqxM50qJV5JPdayci8wCfooqvhFYbIKhv0hTtLvfeeyJMJCscRfFNKIxt43M"
         src="https://cdn.jsdelivr.net/npm/jdenticon@3.2.0/dist/jdenticon.min.js">

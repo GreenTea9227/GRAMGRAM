@@ -45,7 +45,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/error", "/resource/common/**", "/","/common/**",
-                        "/usr/home/about", "/actuator/**",
+                        "/usr/home/about", "/actuator/**","/resource/image/**",
                         "/favicon.ico").permitAll()
                 .requestMatchers("/usr/member/login","/usr/member/findPassword").anonymous()
                 .requestMatchers("/usr/likeablePerson/**").hasAnyRole(INSTAGRAM.name(), ADMIN.name())
