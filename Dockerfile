@@ -11,7 +11,7 @@ COPY --from=build ${JAR_FILE} app.jar
 
 ENV testPwd=1111
 
-ARG pinpointPath=${pinpointPath}
+ENV pinpointPath=/root/pinpoint-agent-2.2.3-NCP-RC1
 
 COPY ${pinpointPath}/pinpoint-bootstrap-2.2.3-NCP-RC1.jar pinpoint-bootstrap-2.2.3-NCP-RC1.jar
 
