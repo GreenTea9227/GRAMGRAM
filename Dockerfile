@@ -11,4 +11,5 @@ COPY --from=build ${JAR_FILE} app.jar
 
 ENV testPwd=1111
 
-ENTRYPOINT ["java","-javaagent:/root/pinpoint-agent-2.2.3-NCP-RC1/pinpoint-bootstrap-2.2.3-NCP-RC1.jar","-Dpinpoint.applicationName=likelike","-Dpinpoint.agentId=likelike","-Dspring.profiles.active=prod","-jar","/app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=prod","-jar","/app.jar"]
+# ENTRYPOINT ["java","-javaagent:/root/pinpoint-agent-2.2.3-NCP-RC1/pinpoint-bootstrap-2.2.3-NCP-RC1.jar","-Dpinpoint.applicationName=likelike","-Dpinpoint.agentId=likelike","-Dspring.profiles.active=prod","-jar","/app.jar"]
